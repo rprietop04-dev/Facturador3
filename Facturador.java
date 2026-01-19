@@ -3,7 +3,7 @@ public class Facturador{
 	//Repertorio de conciertos del grupo
 	static String[][] repertorio = {
 		 {"Tributo Robe", "heavy"}
-		,{"Homaneje Queen", "rock"}
+		,{"Homaneje Queen", "pop"}
 		,{"Magia Knoppler", "rock"}
 		,{"Demonios Rojos", "heavy"}
 	};
