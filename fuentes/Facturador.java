@@ -13,6 +13,19 @@ public class Facturador {
 
     static String cliente = "Ayuntamiento de Badajoz";
 
+    // Constantes para cálculos
+    static final double BASE_HEAVY = 4000d;
+    static final double BASE_ROCK = 3000d;
+
+    static final int UMBRAL_HEAVY = 500;
+    static final int UMBRAL_ROCK = 1000;
+
+    static final double EXTRA_HEAVY = 20d;
+    static final double EXTRA_ROCK = 30d;
+
+    static final double IVA = 0.21;
+    static final double TOTAL_MULTIPLICADOR = 1.21;
+
     public static void main(String[] args) throws Exception {
         Double totalFactura = 0d;
         Integer creditos = 0;
@@ -35,8 +48,8 @@ public class Facturador {
         }
 
         System.out.println("BASE IMPONIBLE: " + totalFactura + " euros");
-        System.out.printf("IVA (21%%): %.2f euros\n", totalFactura * 0.21);
-        System.out.printf("TOTAL FACTURA: %.2f euros\n", totalFactura * 1.21);
+        System.out.printf("IVA (21%%): %.2f euros\n", totalFactura * IVA);
+        System.out.printf("TOTAL FACTURA: %.2f euros\n", totalFactura * TOTAL_MULTIPLICADOR);
         System.out.println("Créditos obtenidos: " + creditos);
     }
 
@@ -46,14 +59,14 @@ public class Facturador {
 
         switch (tipo) {
             case "heavy":
-                importe = 4000d;
-                if (asistentes > 500)
-                    importe += 20 * (asistentes - 500);
+                importe = BASE_HEAVY;
+                if (asistentes > UMBRAL_HEAVY)
+                    importe += EXTRA_HEAVY * (asistentes - UMBRAL_HEAVY);
                 break;
             case "rock":
-                importe = 3000d;
-                if (asistentes > 1000)
-                    importe += 30 * (asistentes - 1000);
+                importe = BASE_ROCK;
+                if (asistentes > UMBRAL_ROCK)
+                    importe += EXTRA_ROCK * (asistentes - UMBRAL_ROCK);
                 break;
             default:
                 throw new Exception("Tipo de concierto desconocido.");
@@ -66,7 +79,7 @@ public class Facturador {
     static int calcularCreditos(String tipo, int asistentes) {
         int creditos = 0;
 
-        creditos += Math.max(asistentes - 500, 0);
+        creditos += Math.max(asistentes - UMBRAL_HEAVY, 0);
 
         if (tipo.equals("heavy")) {
             creditos += asistentes / 5;
