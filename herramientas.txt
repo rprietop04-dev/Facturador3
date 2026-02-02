@@ -1,0 +1,9 @@
+HERRAMIENTAS
+compilar el codigo fuente
+javac -encoding UTF-8 -d compilados fuentes\Facturador.java
+ejecutar el codigo fuente
+java -cp compilados Facturador
+compilar
+..\jdk-25\bin\javac -encoding UTF-8 -d compilados -cp compilados;tests\lib\junit-platform-console-standalone-1.9.2.jar tests\FacturadorTest.java
+ejecutar tests
+java -jar tests\lib\junit-platform-console-standalone-1.9.2.jar -classpath compilados;tests\compilados --scan-classpath
