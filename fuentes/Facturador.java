@@ -58,7 +58,7 @@ public class Facturador {
     // Calcula el importe de una actuación
     static double calcularImporteActuacion(String tipo, int asistentes) throws Exception {
         double importe = 0d;
-
+		TipoConcierto tipoConcierto = TipoConcierto.valueOf(tipo.trim().toUpperCase());
         switch (tipo) {
             case "heavy":
                 importe = BASE_HEAVY;
