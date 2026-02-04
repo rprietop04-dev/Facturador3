@@ -1,3 +1,5 @@
+import java.util.List;
+import java.util.ArrayList;
 public class Facturador {
 	
 	 enum TipoConcierto {
@@ -14,10 +16,9 @@ public class Facturador {
     };
 
     // Actuaciones realizadas indicando el concierto ofrecido y asistentes
-    static Integer[][] actuacionesRealizadas = {
-        {0, 2000}, {2, 1200}, {0, 950}, {3, 1140}
-    };
-
+    static Integer[][] datosActuaciones = {{0, 2000}, {2, 1200}, {0, 950}, {3, 1140}};
+	 
+	
     static String cliente = "Ayuntamiento de Badajoz";
 
     // Constantes para cálculos
@@ -34,23 +35,25 @@ public class Facturador {
     static final double TOTAL_MULTIPLICADOR = 1.21;
 
     public static void main(String[] args) throws Exception {
-        double totalFactura = 0d;
-        int creditos = 0;
+        Double totalFactura = 0d;
+        Integer creditos = 0;
 
         System.out.println("FACTURA DE ACTUACIONES");
         System.out.println("Cliente: " + cliente);
+		
+		List<Actuacion> listaActuaciones = crearListaActuaciones(datosActuaciones);
 
-        for (int i = 0; i < actuacionesRealizadas.length; i++) {
-            int indiceConcierto = actuacionesRealizadas[i][0];
-            String tipo = conciertos[indiceConcierto][1];
-            int asistentes = actuacionesRealizadas[i][1];
+        for (Actuacion actuacion : listaActuaciones) {
+            Integer indiceConcierto = actuacion.indiceConcierto();
+            Integer asistentes = actuacion.asistentes();
+			
+			 String tipoActuacion = repertorio[IndiceConcierto][1];
 
-            double importeActuacion = calcularImporteActuacion(tipo, asistentes);
-            totalFactura += importeActuacion;
+			
+            totalFactura += calcularImporteActuacion(tipoActuacion, asistentes);
+            creditos += calcularCreditos(tipoActuacion, asistentes);
 
-            creditos += calcularCreditos(tipo, asistentes);
-
-            System.out.println("\tConcierto: " + conciertos[indiceConcierto][0]);
+            System.out.println("\tConcierto: " + repertorio[actuacion.getIndiceConcierto()][0]);
             System.out.println("\t\tAsistentes: " + asistentes);
         }
 
@@ -59,9 +62,20 @@ public class Facturador {
         System.out.printf("TOTAL FACTURA: %.2f euros\n", totalFactura * TOTAL_MULTIPLICADOR);
         System.out.println("Créditos obtenidos: " + creditos);
     }
+	
+	public static List<Actuacion> crearListaActuaciones(Integer[][] datosActuaciones){
+		List<Actuacion> resultado = new ArrayList<>();
+		for( Integer[] datosActuacion : datosActuaciones)
+			Integer indiceConcierto = datosActuacion[0];
+			Integer asistentes = datosActuacion[1];
+			Actuacion actuacion = (indiceConcierto, asistentes);
+			actuaciones.add(actuacion);
+		}
+		return resultado;
+	}
 
     // Calcula el importe de una actuación
-    static double calcularImporteActuacion(String tipo, int asistentes) throws Exception {
+    public static Double calcularImporteActuacion(String tipo, int asistentes) throws Exception {
         double importe = 0d;
 		TipoConcierto tipoConcierto = TipoConcierto.valueOf(tipo.trim().toUpperCase());
         switch (tipo) {
@@ -83,7 +97,7 @@ public class Facturador {
     }
 
     // Calcula los créditos obtenidos
-    static int calcularCreditos(String tipo, int asistentes) {
+    public static Integer calcularCreditos(String tipo, int asistentes) {
         int creditos = 0;
 
         creditos += Math.max(asistentes - UMBRAL_HEAVY, 0);
@@ -95,3 +109,5 @@ public class Facturador {
         return creditos;
     }
 }
+
+ record Actuacion(Integer indiceConcierto, Integer asistentes){}
