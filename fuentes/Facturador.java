@@ -1,15 +1,17 @@
 public class Facturador {
 
-    // Repertorio de conciertos del grupo
-    static String[][] repertorio = {
+    // Conciertos disponibles del grupo
+    static String[][] conciertos = {
          {"Tributo Robe", "heavy"},
          {"Homaneje Queen", "pop"},
          {"Magia Knoppler", "rock"},
          {"Demonios Rojos", "heavy"}
     };
 
-    // Actuaciones realizadas indicando el concierto ofrecido y audiencias obtenidas
-    static Integer[][] actuaciones = {{0, 2000}, {2, 1200}, {0, 950}, {3, 1140}};
+    // Actuaciones realizadas indicando el concierto ofrecido y asistentes
+    static Integer[][] actuacionesRealizadas = {
+        {0, 2000}, {2, 1200}, {0, 950}, {3, 1140}
+    };
 
     static String cliente = "Ayuntamiento de Badajoz";
 
@@ -27,23 +29,23 @@ public class Facturador {
     static final double TOTAL_MULTIPLICADOR = 1.21;
 
     public static void main(String[] args) throws Exception {
-        Double totalFactura = 0d;
-        Integer creditos = 0;
+        double totalFactura = 0d;
+        int creditos = 0;
 
         System.out.println("FACTURA DE ACTUACIONES");
         System.out.println("Cliente: " + cliente);
 
-        for (int i = 0; i < actuaciones.length; i++) {
-            Integer iConcierto = actuaciones[i][0];
-            String tipo = repertorio[iConcierto][1];
-            int asistentes = actuaciones[i][1];
+        for (int i = 0; i < actuacionesRealizadas.length; i++) {
+            int indiceConcierto = actuacionesRealizadas[i][0];
+            String tipo = conciertos[indiceConcierto][1];
+            int asistentes = actuacionesRealizadas[i][1];
 
             double importeActuacion = calcularImporteActuacion(tipo, asistentes);
             totalFactura += importeActuacion;
 
             creditos += calcularCreditos(tipo, asistentes);
 
-            System.out.println("\tConcierto: " + repertorio[iConcierto][0]);
+            System.out.println("\tConcierto: " + conciertos[indiceConcierto][0]);
             System.out.println("\t\tAsistentes: " + asistentes);
         }
 
@@ -53,7 +55,7 @@ public class Facturador {
         System.out.println("Créditos obtenidos: " + creditos);
     }
 
-    // Método para calcular el importe de una actuación según tipo y asistentes
+    // Calcula el importe de una actuación
     static double calcularImporteActuacion(String tipo, int asistentes) throws Exception {
         double importe = 0d;
 
@@ -75,7 +77,7 @@ public class Facturador {
         return importe;
     }
 
-    // Método para calcular créditos según tipo y asistentes
+    // Calcula los créditos obtenidos
     static int calcularCreditos(String tipo, int asistentes) {
         int creditos = 0;
 
