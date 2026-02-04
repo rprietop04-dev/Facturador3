@@ -1,4 +1,9 @@
 public class Facturador {
+	
+	 enum TipoConcierto {
+        HEAVY,
+        ROCK
+    }
 
     // Conciertos disponibles del grupo
     static String[][] conciertos = {
